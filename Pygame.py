@@ -20,23 +20,31 @@ class Player(pygame.sprite.Sprite):
         self.moving = False
         self.speed = 256
 
-    def get_input(self):
+       def get_input(self):
         keys = pygame.key.get_pressed()
 
         # The elifs prevent the player from walking in diagonal. Generally games like
         # Pokémon do not allow that kind of movement, and that's what we're replicating here
         if keys[pygame.K_UP]:
-            self.direction = self.pos + pygame.math.Vector2(0, -TILE_SIZE)
-            self.moving = True
+            new_pos = self.pos + pygame.math.Vector2(0, -TILE_SIZE)
+            if 0 <= new_pos.y <= WINDOW_SIZE - TILE_SIZE:
+                self.direction = new_pos
+                self.moving = True
         elif keys[pygame.K_DOWN]:
-            self.direction = self.pos + pygame.math.Vector2(0, TILE_SIZE)
-            self.moving = True
+            new_pos = self.pos + pygame.math.Vector2(0, TILE_SIZE)
+            if 0 <= new_pos.y <= WINDOW_SIZE - TILE_SIZE:
+                self.direction = new_pos
+                self.moving = True
         elif keys[pygame.K_LEFT]:
-            self.direction = self.pos + pygame.math.Vector2(-TILE_SIZE, 0)
-            self.moving = True
+            new_pos = self.pos + pygame.math.Vector2(-TILE_SIZE, 0)
+            if 0 <= new_pos.x <= WINDOW_SIZE - TILE_SIZE:
+                self.direction = new_pos
+                self.moving = True
         elif keys[pygame.K_RIGHT]:
-            self.direction = self.pos + pygame.math.Vector2(TILE_SIZE, 0)
-            self.moving = True
+            new_pos = self.pos + pygame.math.Vector2(TILE_SIZE, 0)
+            if 0 <= new_pos.x <= WINDOW_SIZE - TILE_SIZE:
+                self.direction = new_pos
+                self.moving = True
         else:
             # Reset the direction to (0, 0), otherwise we'd keep walking forever
             self.direction = pygame.math.Vector2()
